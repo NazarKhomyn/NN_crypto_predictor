@@ -16,7 +16,7 @@ CONFIG = configparser.ConfigParser()
 
 class Trainer:
     def __init__(self, feature_manager, prefix, path_to_datasets, input_columns, output_column,
-                 split_ratio=0.8, look_forward=5, look_back=100, is_saved_dataset=False):
+                 split_ratio=0.8, look_forward=1, look_back=50, is_saved_dataset=False):
         self.feature_manager = feature_manager
         self.model = Sequential()
 
@@ -52,7 +52,7 @@ class Trainer:
                             "X_test": str(self.X_test.shape),
                             "Y_test": str(self.Y_test.shape)}
 
-    def run(self, epochs=10, batch_size=128, validation_split=0.1):
+    def run(self, epochs=20, batch_size=128, validation_split=0.1):
         amount_of_features = len(self.input_columns)
         amount_of_outputs = len(self.output_column)
 
