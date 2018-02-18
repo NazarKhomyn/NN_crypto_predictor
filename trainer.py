@@ -52,7 +52,7 @@ class Trainer:
                             "X_test": str(self.X_test.shape),
                             "Y_test": str(self.Y_test.shape)}
 
-    def run(self, epochs=6, batch_size=128, validation_split=0.1):
+    def run(self, epochs=3, batch_size=128, validation_split=0.1):
         amount_of_features = len(self.input_columns)
         amount_of_outputs = len(self.output_column)
 
@@ -93,7 +93,13 @@ class Trainer:
         # Compile for regression
         self.model.compile(optimizer="adam", loss="mse", metrics=["mae"])
 
-        self.history = self.model.fit(self.X_train, self.Y_train, batch_size=batch_size,
+        train_set = np.array([self.X_train[i] for i in range(0, self.X_train.shape[0],
+                                                             int(0.9 * self.look_back))])
+
+        train_target_set = np.array([self.Y_train[i] for i in range(0, self.Y_train.shape[0],
+                                                                    int(0.9 * self.look_back))])
+
+        self.history = self.model.fit(train_set, train_target_set, batch_size=batch_size,
                                       verbose=2, epochs=epochs, shuffle=True, validation_split=validation_split)
 
         CONFIG["Train info"] = {"epochs": epochs,
