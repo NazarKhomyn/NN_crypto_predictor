@@ -16,7 +16,7 @@ CONFIG = configparser.ConfigParser()
 
 class Trainer:
     def __init__(self, feature_manager, prefix, path_to_datasets, input_columns, output_column,
-                 split_ratio=0.8, look_forward=10, look_back=40, is_saved_dataset=False):
+                 split_ratio=0.8, look_forward=5, look_back=100, is_saved_dataset=False):
         self.feature_manager = feature_manager
         self.model = Sequential()
 
@@ -52,7 +52,7 @@ class Trainer:
                             "X_test": str(self.X_test.shape),
                             "Y_test": str(self.Y_test.shape)}
 
-    def run(self, epochs=3, batch_size=128, validation_split=0.1):
+    def run(self, epochs=10, batch_size=128, validation_split=0.1):
         amount_of_features = len(self.input_columns)
         amount_of_outputs = len(self.output_column)
 
@@ -94,10 +94,10 @@ class Trainer:
         self.model.compile(optimizer="adam", loss="mse", metrics=["mae"])
 
         train_set = np.array([self.X_train[i] for i in range(0, self.X_train.shape[0],
-                                                             int(0.9 * self.look_back))])
+                                                             int(0.8 * self.look_back))])
 
         train_target_set = np.array([self.Y_train[i] for i in range(0, self.Y_train.shape[0],
-                                                                    int(0.9 * self.look_back))])
+                                                                    int(0.8 * self.look_back))])
 
         self.history = self.model.fit(train_set, train_target_set, batch_size=batch_size,
                                       verbose=2, epochs=epochs, shuffle=True, validation_split=validation_split)
