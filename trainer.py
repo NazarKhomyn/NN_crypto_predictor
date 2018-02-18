@@ -199,8 +199,8 @@ def main(output_column):
     ]:
         for trades_feature in trades_features:
             all_features.append(pair + "_" + trades_feature)
-        for trading_indicator in trading_indicators:
-            all_features.append(pair + "_" + trading_indicator)
+      #  for trading_indicator in trading_indicators:
+       #     all_features.append(pair + "_" + trading_indicator)
         for extrema_feature in extrema_features:
             all_features.append(extrema_feature)
 
@@ -209,7 +209,7 @@ def main(output_column):
     feature_manager.extract_features(all_features, fill_nan=True, scale=True)
 
     # CONFIGURATIONS
-    path_to_datasets = "./Data/Bitfinex/"
+    path_to_datasets = "./Data/"
     input_columns = []
 
     for pair in [
