@@ -158,27 +158,12 @@ def main(output_column):
     # feature_manager.save_dataset_to_csv("./Data/BTC-ETH-ETC-LTC-XRP-XMR-BCH-ZEC-NEO.csv")
 
     trades_features = [
-        "open",
-        "high",
-        "low",
-        "close",
-        "total_volume",
-        "total_amount",
-    ]
-    trading_indicators = [
-        'MACD',
-        'CCI',
-        'ATR',
-        'BOLL',
-        'BOOL20',
-        'EMA20',
-        'MA5',
-        'MA10',
-        'MTM6',
-        'MTM12',
-        'ROC',
-        'SMI',
-        'WVAD'
+        "BTCUSD_open",
+        "BTCUSD_high",
+        "BTCUSD_low",
+        "BTCUSD_close",
+        "BTCUSD_total_volume",
+        "BTCUSD_total_amount",
     ]
 
     extrema_features = [
@@ -186,48 +171,13 @@ def main(output_column):
         'dists_to_extrema',
         'growth_decrease'
     ]
-    all_features = []
-
-    for pair in [
-        # Bitfinex
-        "BTCUSD"
-        #"BCHUSD", "ETCUSD",
-        #"ETHUSD", "LTCUSD", "NEOUSD",
-        #"XMRUSD", "XRPUSD", "ZECUSD",
-        # Poloniex
-        #"BTCETH", "BTCXRP"
-    ]:
-        for trades_feature in trades_features:
-            all_features.append(pair + "_" + trades_feature)
-      #  for trading_indicator in trading_indicators:
-       #     all_features.append(pair + "_" + trading_indicator)
-        for extrema_feature in extrema_features:
-            all_features.append(extrema_feature)
-
-    # all_features.append("market_cap")
-
+    all_features = trades_features + extrema_features
     feature_manager.extract_features(all_features, fill_nan=True, scale=True)
 
     # CONFIGURATIONS
     path_to_datasets = "./Data/"
-    input_columns = []
 
-    for pair in [
-        # Bitfinex
-        "BTCUSD"#, "BCHUSD", "ETCUSD",
-        #"ETHUSD", "LTCUSD", "NEOUSD",
-        #"XMRUSD", "XRPUSD", "ZECUSD",
-        # Poloniex
-        #"BTCETH", "BTCXRP"
-    ]:
-        for trades_feature in trades_features:
-            input_columns.append(pair + "_" + trades_feature)
-        #for trading_indicator in trading_indicators:
-        #    input_columns.append(pair + "_" + trading_indicator)
-        input_columns.extend(['extremas', 'growth_decrease'])
-
-    # input_columns.append("market_cap")
-
+    input_columns = trades_features + ['extremas', 'growth_decrease']
     prefix = "couple_30_"
 
     trainer = Trainer(feature_manager=feature_manager,
@@ -248,9 +198,4 @@ def main(output_column):
     trainer.get_report(prediction=prediction, verification=verification)
 
 
-#for output in [["XRPUSD_close", "LTCUSD_close"],
-#               ["BTCUSD_close"],
-#               ["ETHUSD_close"],
-#               ["XRPUSD_close"],
-#               ["ETHUSD_close", "BTCUSD_close", "XRPUSD_close", "LTCUSD_close"]]:
-main(output_column= 'dists_to_extrema')
+main(output_column=["dists_to_extrema"])
