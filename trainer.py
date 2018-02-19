@@ -131,8 +131,9 @@ class Trainer:
             title=self.input_columns + ["{} periods look_back".format(self.look_back)],
             Y_train=self.feature_manager.rescale(self.Y_train, columns=self.output_column),
             Y_test=self.feature_manager.rescale(self.Y_test, columns=self.output_column),
-            prediction=prediction,
-            verification=verification,
+           # prediction=prediction,
+            prediction=self.feature_manager.rescale(prediction, columns=self.output_column),
+            verification=self.feature_manager.rescale(verification, columns=self.output_column),
             names=self.output_column
         )
 
