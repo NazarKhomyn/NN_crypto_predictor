@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e8776b27-177c-4695-994d-fae287f16c63" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/trainer.py" afterPath="$PROJECT_DIR$/trainer.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -73,11 +74,11 @@
           <file leaf-file-name="trainer.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/trainer.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-252">
-                  <caret line="54" column="26" lean-forward="false" selection-start-line="54" selection-start-column="26" selection-end-line="54" selection-end-column="26" />
+                <state relative-caret-position="630">
+                  <caret line="54" column="27" lean-forward="false" selection-start-line="54" selection-start-column="27" selection-end-line="54" selection-end-column="27" />
                   <folding>
-                    <element signature="e#7563#7724#0" expanded="false" />
-                    <element signature="e#7749#7830#0" expanded="false" />
+                    <element signature="e#7564#7725#0" expanded="false" />
+                    <element signature="e#7750#7831#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -266,7 +267,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="378">
           <caret line="18" column="48" lean-forward="false" selection-start-line="18" selection-start-column="48" selection-end-line="18" selection-end-column="48" />
-          <folding />
+          <folding>
+            <element signature="e#7564#7725#0" expanded="false" />
+            <element signature="e#7750#7831#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -306,14 +310,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/trainer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="183" column="0" lean-forward="false" selection-start-line="183" selection-start-column="0" selection-end-line="183" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/feature_manager.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="378">
@@ -322,6 +318,17 @@
             <element signature="e#0#18#0" expanded="true" />
             <element signature="e#4364#4985#0" expanded="false" />
             <element signature="e#5025#5156#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/trainer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="54" column="27" lean-forward="false" selection-start-line="54" selection-start-column="27" selection-end-line="54" selection-end-column="27" />
+          <folding>
+            <element signature="e#7564#7725#0" expanded="false" />
+            <element signature="e#7750#7831#0" expanded="false" />
           </folding>
         </state>
       </provider>
