@@ -77,7 +77,7 @@ class FeatureManager:
 
         if self.features is not None:
             if dataset_size is None:
-                dataset_size = self.trades_df.shape[0] - 700
+                dataset_size = self.trades_df.shape[0]
 
             if train_set_size is None:
                 train_set_size = int(dataset_size * split_ratio)

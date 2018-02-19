@@ -16,7 +16,7 @@ CONFIG = configparser.ConfigParser()
 
 class Trainer:
     def __init__(self, feature_manager, prefix, path_to_datasets, input_columns, output_column,
-                 split_ratio=0.8, look_forward=1, look_back=50, is_saved_dataset=False):
+                 split_ratio=0.8, look_forward=10, look_back=70, is_saved_dataset=False):
         self.feature_manager = feature_manager
         self.model = Sequential()
 
@@ -52,7 +52,7 @@ class Trainer:
                             "X_test": str(self.X_test.shape),
                             "Y_test": str(self.Y_test.shape)}
 
-    def run(self, epochs=20, batch_size=128, validation_split=0.1):
+    def run(self, epochs=10, batch_size=128, validation_split=0.1):
         amount_of_features = len(self.input_columns)
         amount_of_outputs = len(self.output_column)
 
@@ -70,19 +70,19 @@ class Trainer:
 
         self.model.add(LSTM(amount_of_features, kernel_initializer="random_uniform", return_sequences=True,
                        input_shape=(self.look_back, amount_of_features)))
-        self.model.add(Dropout(0.1))
+        self.model.add(Dropout(0.2))
 
         self.model.add(LSTM(120, kernel_initializer="random_uniform", return_sequences=True))
-        self.model.add(Dropout(0.1))
+        self.model.add(Dropout(0.2))
 
         self.model.add(LSTM(120, kernel_initializer="random_uniform", return_sequences=True))
-        self.model.add(Dropout(0.1))
+        self.model.add(Dropout(0.2))
 
         self.model.add(LSTM(120, kernel_initializer="random_uniform", return_sequences=True))
-        self.model.add(Dropout(0.1))
+        self.model.add(Dropout(0.2))
 
         self.model.add(LSTM(amount_of_features, kernel_initializer="random_uniform", return_sequences=True))
-        self.model.add(Dropout(0.1))
+        self.model.add(Dropout(0.2))
 
         # LSTM layer
         self.model.add(LSTM(480, kernel_initializer="random_uniform"))
@@ -94,10 +94,10 @@ class Trainer:
         self.model.compile(optimizer="adam", loss="mse", metrics=["mae"])
 
         train_set = np.array([self.X_train[i] for i in range(0, self.X_train.shape[0],
-                                                             int(0.8 * self.look_back))])
+                                                             int(0.95 * self.look_back))])
 
         train_target_set = np.array([self.Y_train[i] for i in range(0, self.Y_train.shape[0],
-                                                                    int(0.8 * self.look_back))])
+                                                                    int(0.95 * self.look_back))])
 
         self.history = self.model.fit(train_set, train_target_set, batch_size=batch_size,
                                       verbose=2, epochs=epochs, shuffle=True, validation_split=validation_split)
@@ -177,7 +177,9 @@ def main(output_column):
         'dists_to_extrema',
         'growth_decrease'
     ]
+
     all_features = trades_features + extrema_features
+
     feature_manager.extract_features(all_features, fill_nan=True, scale=True)
 
     # CONFIGURATIONS
