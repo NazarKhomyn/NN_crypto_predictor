@@ -52,7 +52,7 @@ class Trainer:
                             "X_test": str(self.X_test.shape),
                             "Y_test": str(self.Y_test.shape)}
 
-    def run(self, epochs=10, batch_size=128, validation_split=0.1):
+    def run(self, epochs=15, batch_size=128, validation_split=0.1):
         amount_of_features = len(self.input_columns)
         amount_of_outputs = len(self.output_column)
 
@@ -73,16 +73,16 @@ class Trainer:
         self.model.add(Dropout(0.2))
 
         self.model.add(LSTM(120, kernel_initializer="random_uniform", return_sequences=True))
-        self.model.add(Dropout(0.2))
+        #self.model.add(Dropout(0.2))
 
         self.model.add(LSTM(120, kernel_initializer="random_uniform", return_sequences=True))
-        self.model.add(Dropout(0.2))
+        #self.model.add(Dropout(0.2))
 
         self.model.add(LSTM(120, kernel_initializer="random_uniform", return_sequences=True))
-        self.model.add(Dropout(0.2))
+        self.model.add(Dropout(0.1))
 
         self.model.add(LSTM(amount_of_features, kernel_initializer="random_uniform", return_sequences=True))
-        self.model.add(Dropout(0.2))
+        self.model.add(Dropout(0.1))
 
         # LSTM layer
         self.model.add(LSTM(480, kernel_initializer="random_uniform"))
@@ -131,9 +131,10 @@ class Trainer:
             title=self.input_columns + ["{} periods look_back".format(self.look_back)],
             Y_train=self.feature_manager.rescale(self.Y_train, columns=self.output_column),
             Y_test=self.feature_manager.rescale(self.Y_test, columns=self.output_column),
-           # prediction=prediction,
-            prediction=self.feature_manager.rescale(prediction, columns=self.output_column),
-            verification=self.feature_manager.rescale(verification, columns=self.output_column),
+            prediction=prediction,
+            verification = verification,
+            #prediction=self.feature_manager.rescale(prediction, columns=self.output_column),
+            #verification=self.feature_manager.rescale(verification, columns=self.output_column),
             names=self.output_column
         )
 
