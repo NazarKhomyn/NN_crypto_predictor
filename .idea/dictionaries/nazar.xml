@@ -2,9 +2,11 @@
   <dictionary name="nazar">
     <words>
       <w>btcusd</w>
+      <w>crossentropy</w>
       <w>dataset</w>
       <w>datasets</w>
       <w>extremas</w>
+      <w>splitted</w>
       <w>yaml</w>
     </words>
   </dictionary>

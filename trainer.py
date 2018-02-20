@@ -91,7 +91,7 @@ class Trainer:
         self.model.add(Dense(amount_of_outputs, activation="linear", kernel_initializer="random_uniform"))
 
         # Compile for regression
-        self.model.compile(optimizer="adam", loss="mse", metrics=["mae"])
+        self.model.compile(optimizer="sgd", loss="binary_crossentropy", metrics=["accuracy"])
 
         train_set = np.array([self.X_train[i] for i in range(0, self.X_train.shape[0],
                                                              int(0.50 * self.look_back))])
@@ -161,7 +161,7 @@ def main(output_column):
     # feature_manager.add_total_market_cap(path="./Data/cmc_5s.csv")
 
     feature_manager = FeatureManager()
-    feature_manager.read_dataset_from_csv("BTC_data_extremas.csv")
+    feature_manager.read_dataset_from_csv("Data/BTC_data.csv")
 
     # feature_manager.save_dataset_to_csv("./Data/BTC-ETH-ETC-LTC-XRP-XMR-BCH-ZEC-NEO.csv")
 
@@ -174,13 +174,13 @@ def main(output_column):
         "BTCUSD_total_amount",
     ]
 
-    extrema_features = [
-        'extremas',
-        'dists_to_extrema',
-        'growth_decrease'
+    other_features = [
+        'time_since_extrema',
+        'grow',
+        #'growth_decrease'
     ]
 
-    all_features = trades_features + extrema_features
+    all_features = trades_features + other_features
 
     feature_manager.extract_features(all_features, fill_nan=True, scale=True)
 
@@ -209,4 +209,4 @@ def main(output_column):
     trainer.get_report(prediction=prediction, verification=verification)
 
 
-main(output_column=["dists_to_extrema"])
+main(output_column=["grow"])

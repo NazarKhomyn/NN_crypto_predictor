@@ -36,21 +36,24 @@ class FeatureManager:
 
     @staticmethod
     def scale(data):
-        average = np.mean(data, axis=0)
-        standard_deviation = np.std(data, axis=0)
+        # average = np.mean(data, axis=0)
+        # standard_deviation = np.std(data, axis=0)
 
-        scale_info = {"avg": average, "std": standard_deviation}
+        maximum = np.max(data, axis=0)
+        minimum = np.min(data, axis=0)
 
-        return (data - average) / standard_deviation, scale_info
+        scale_info = {"max": maximum, "min": minimum}
+
+        return (data - minimum) / (maximum - minimum), scale_info
 
     def rescale(self, data, columns):
         temp = data.T
 
         for i in range(len(columns)):
-            average = self.scale_params[columns[i]]["avg"]
-            standard_deviation = self.scale_params[columns[i]]["std"]
+            maximum = self.scale_params[columns[i]]["max"]
+            minimum = self.scale_params[columns[i]]["min"]
 
-            temp[i] = temp[i] * standard_deviation + average
+            temp[i] = temp[i] * (maximum - minimum) + minimum
 
         return temp.T
 
