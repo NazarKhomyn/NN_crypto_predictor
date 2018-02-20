@@ -83,20 +83,23 @@ def plot_train_info(history_info):
     history = history_info.history
 
     fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(14, 8))
+    try:
+        plt.subplots_adjust(left=0.045, right=0.99, top=0.92, bottom=0.1)
 
-    plt.subplots_adjust(left=0.045, right=0.99, top=0.92, bottom=0.1)
+        ax1.plot(history["val_loss"], c="r", label="Value Loss")
+        plt.legend()
 
-    ax1.plot(history["val_loss"], c="r", label="Value Loss")
-    plt.legend()
+        ax2.plot(history["val_mean_absolute_error"], c="b", label="Value MAE")
+        plt.legend()
 
-    ax2.plot(history["val_mean_absolute_error"], c="b", label="Value MAE")
-    plt.legend()
+        ax3.plot(history["loss"], c="r", label="Loss")
+        plt.legend()
 
-    ax3.plot(history["loss"], c="r", label="Loss")
-    plt.legend()
+        ax4.plot(history["val_mean_absolute_error"], c="b", label="MAE")
+        plt.legend()
 
-    ax4.plot(history["val_mean_absolute_error"], c="b", label="MAE")
-    plt.legend()
+    except KeyError:
+        print("Lol")
 
     mpld3.save_html(fig, "fit_history.html")
     plt.close()

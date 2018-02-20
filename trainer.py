@@ -52,7 +52,7 @@ class Trainer:
                             "X_test": str(self.X_test.shape),
                             "Y_test": str(self.Y_test.shape)}
 
-    def run(self, epochs=11, batch_size=128, validation_split=0.1):
+    def run(self, epochs=1, batch_size=128, validation_split=0.1):
         amount_of_features = len(self.input_columns)
         amount_of_outputs = len(self.output_column)
 
@@ -88,7 +88,7 @@ class Trainer:
         self.model.add(LSTM(480, kernel_initializer="random_uniform"))
         self.model.add(Dropout(0.25))
 
-        self.model.add(Dense(amount_of_outputs, activation="linear", kernel_initializer="random_uniform"))
+        self.model.add(Dense(amount_of_outputs, activation="relu", kernel_initializer="random_uniform"))
 
         # Compile for regression
         self.model.compile(optimizer="sgd", loss="binary_crossentropy", metrics=["accuracy"])
