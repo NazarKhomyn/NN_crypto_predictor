@@ -178,6 +178,19 @@ def main(output_column):
         "BTCUSD_total_volume",
         "BTCUSD_total_amount",
     ]
+    ind = ['MACD',
+           'CCI',
+           'ATR',
+           'BOLL',
+           'BOOL20',
+           'EMA20',
+           'MA5',
+           'MA10',
+           'MTM6',
+           'MTM12',
+           'ROC',
+           'SMI',
+           'WVAD']
 
     other_features = [
         'time_since_extrema',
@@ -185,7 +198,7 @@ def main(output_column):
         #'growth_decrease'
     ]
 
-    all_features = trades_features + other_features
+    all_features = trades_features + other_features + ind
 
     feature_manager.extract_features(all_features, fill_nan=True, scale=True)
 
