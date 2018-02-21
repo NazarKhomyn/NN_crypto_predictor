@@ -70,7 +70,7 @@ class Trainer:
 
         self.model.add(LSTM(amount_of_features, kernel_initializer="random_uniform", return_sequences=True,
                        input_shape=(self.look_back, amount_of_features)))
-        self.model.add(Dropout(0.2))
+       # self.model.add(Dropout(0.2))
 
         # self.model.add(LSTM(120, kernel_initializer="random_uniform", return_sequences=True))
         # #self.model.add(Dropout(0.2))
@@ -86,7 +86,7 @@ class Trainer:
 
         # LSTM layer
         self.model.add(LSTM(480, kernel_initializer="random_uniform"))
-        self.model.add(Dropout(0.2))
+        self.model.add(Dropout(0.1))
 
         self.model.add(Dense(1, activation="sigmoid", kernel_initializer="random_uniform"))
 
