@@ -70,19 +70,19 @@ class Trainer:
 
         self.model.add(LSTM(amount_of_features, kernel_initializer="random_uniform", return_sequences=True,
                        input_shape=(self.look_back, amount_of_features)))
-       # self.model.add(Dropout(0.2))
+        self.model.add(Dropout(0.2))
 
-        # self.model.add(LSTM(120, kernel_initializer="random_uniform", return_sequences=True))
-        # #self.model.add(Dropout(0.2))
-        #
-        # self.model.add(LSTM(120, kernel_initializer="random_uniform", return_sequences=True))
-        # #self.model.add(Dropout(0.2))
-        #
-        # self.model.add(LSTM(120, kernel_initializer="random_uniform", return_sequences=True))
-        # self.model.add(Dropout(0.1))
-        #
-        # self.model.add(LSTM(amount_of_features, kernel_initializer="random_uniform", return_sequences=True))
-        # self.model.add(Dropout(0.1))
+        self.model.add(LSTM(120, kernel_initializer="random_uniform", return_sequences=True))
+        self.model.add(Dropout(0.2))
+
+        self.model.add(LSTM(120, kernel_initializer="random_uniform", return_sequences=True))
+        self.model.add(Dropout(0.2))
+
+        self.model.add(LSTM(120, kernel_initializer="random_uniform", return_sequences=True))
+        self.model.add(Dropout(0.1))
+
+        self.model.add(LSTM(amount_of_features, kernel_initializer="random_uniform", return_sequences=True))
+        self.model.add(Dropout(0.1))
 
         # LSTM layer
         self.model.add(LSTM(720, kernel_initializer="random_uniform"))
@@ -105,7 +105,7 @@ class Trainer:
                                       verbose=2, epochs=epochs, validation_split=validation_split)
 
         scores = self.model.evaluate(self.X_test, self.Y_test, verbose=0)
-        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!Accuracy: %.2f%%" % (scores[1] * 100))
+        print("Accuracy: %.2f%%" % (scores[1] * 100))
         #shuffle=True
         CONFIG["Train info"] = {"epochs": epochs,
                                 "validation_split": validation_split,
