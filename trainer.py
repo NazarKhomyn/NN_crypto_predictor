@@ -52,7 +52,7 @@ class Trainer:
                             "X_test": str(self.X_test.shape),
                             "Y_test": str(self.Y_test.shape)}
 
-    def run(self, epochs=11, batch_size=64, validation_split=0.1):
+    def run(self, epochs=11, batch_size=128, validation_split=0.1):
         amount_of_features = len(self.input_columns)
         amount_of_outputs = len(self.output_column)
 
@@ -85,8 +85,8 @@ class Trainer:
         # self.model.add(Dropout(0.1))
 
         # LSTM layer
-        self.model.add(LSTM(480, kernel_initializer="random_uniform"))
-        self.model.add(Dropout(0.1))
+        self.model.add(LSTM(720, kernel_initializer="random_uniform"))
+        self.model.add(Dropout(0.2))
 
         self.model.add(Dense(1, activation="sigmoid", kernel_initializer="random_uniform"))
 
@@ -102,7 +102,8 @@ class Trainer:
                                                                     int(0.9 * self.look_back))])
 
         self.history = self.model.fit(train_set, train_target_set, batch_size=batch_size,
-                                      verbose=1, epochs=epochs, validation_split=validation_split)
+                                      verbose=2, epochs=epochs, validation_split=validation_split)
+
         scores = self.model.evaluate(self.X_test, self.y_test, verbose=0)
         print("!!!!!!!!!!!!!!!!!!!!!!!!!!!Accuracy: %.2f%%" % (scores[1] * 100))
         #shuffle=True
@@ -114,7 +115,7 @@ class Trainer:
         print("\nSave {} model".format(filename))
         model_support.save_model(model=self.model, filename=filename, target_dir=target_dir)
 
-    def build_prediction(self, batch_size=64):
+    def build_prediction(self, batch_size=128):
         CONFIG["Prediction info"] = {"batch_size": batch_size}
 
         print("\nBuilding prediction and verification...")
@@ -207,10 +208,10 @@ def main(output_column):
 
     prediction, verification = trainer.build_prediction()
 
-    with open('config.yaml', 'w') as configfile:
-        CONFIG.write(configfile)
+   # with open('config.yaml', 'w') as configfile:
+    #    CONFIG.write(configfile)
 
-    trainer.get_report(prediction=prediction, verification=verification)
+    #trainer.get_report(prediction=prediction, verification=verification)
 
 
 main(output_column=["grow"])
