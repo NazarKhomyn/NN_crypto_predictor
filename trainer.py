@@ -52,7 +52,7 @@ class Trainer:
                             "X_test": str(self.X_test.shape),
                             "Y_test": str(self.Y_test.shape)}
 
-    def run(self, epochs=11, batch_size=128, validation_split=0.1):
+    def run(self, epochs=11, batch_size=64, validation_split=0.1):
         amount_of_features = len(self.input_columns)
         amount_of_outputs = len(self.output_column)
 
@@ -86,22 +86,26 @@ class Trainer:
 
         # LSTM layer
         self.model.add(LSTM(480, kernel_initializer="random_uniform"))
-        self.model.add(Dropout(0.25))
+        self.model.add(Dropout(0.2))
 
-        self.model.add(Dense(amount_of_outputs, activation="relu", kernel_initializer="random_uniform"))
+        self.model.add(Dense(1, activation="sigmoid", kernel_initializer="random_uniform"))
 
-        # Compile for regression
-        self.model.compile(optimizer="sgd", loss="binary_crossentropy", metrics=["accuracy"])
+        # Compile
+        self.model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
+
+        print(self.model.summary())
 
         train_set = np.array([self.X_train[i] for i in range(0, self.X_train.shape[0],
-                                                             int(0.50 * self.look_back))])
+                                                             int(0.9 * self.look_back))])
 
         train_target_set = np.array([self.Y_train[i] for i in range(0, self.Y_train.shape[0],
-                                                                    int(0.50 * self.look_back))])
+                                                                    int(0.9 * self.look_back))])
 
         self.history = self.model.fit(train_set, train_target_set, batch_size=batch_size,
-                                      verbose=2, epochs=epochs, shuffle=True, validation_split=validation_split)
-
+                                      verbose=1, epochs=epochs, validation_split=validation_split)
+        scores = self.model.evaluate(self.X_test, self.y_test, verbose=0)
+        print("Accuracy: %.2f%%" % (scores[1] * 100))
+        #shuffle=True
         CONFIG["Train info"] = {"epochs": epochs,
                                 "validation_split": validation_split,
                                 "batch_size": batch_size}
@@ -110,7 +114,7 @@ class Trainer:
         print("\nSave {} model".format(filename))
         model_support.save_model(model=self.model, filename=filename, target_dir=target_dir)
 
-    def build_prediction(self, batch_size=128):
+    def build_prediction(self, batch_size=64):
         CONFIG["Prediction info"] = {"batch_size": batch_size}
 
         print("\nBuilding prediction and verification...")
