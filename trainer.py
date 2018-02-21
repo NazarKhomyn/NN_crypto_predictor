@@ -104,7 +104,7 @@ class Trainer:
         self.history = self.model.fit(train_set, train_target_set, batch_size=batch_size,
                                       verbose=2, epochs=epochs, validation_split=validation_split)
 
-        scores = self.model.evaluate(self.X_test, self.y_test, verbose=0)
+        scores = self.model.evaluate(self.X_test, self.Y_test, verbose=0)
         print("!!!!!!!!!!!!!!!!!!!!!!!!!!!Accuracy: %.2f%%" % (scores[1] * 100))
         #shuffle=True
         CONFIG["Train info"] = {"epochs": epochs,
